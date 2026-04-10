@@ -27,7 +27,7 @@ class ParsingCode(jast.JNodeVisitor):
         self.countline = 0
         blockComment = False
         with open(arquivo, 'r') as f:
-            for line in f: # f.split('\n')
+            for line in f.strip(): #strip() remove linhas em branco
                 if blockComment == True and !line[1:] == '*/':
                     continue
                 else:
@@ -37,7 +37,9 @@ class ParsingCode(jast.JNodeVisitor):
                     continue
                 if line[:1] == '//':
                     continue
-                self.countline += 1
+                
+                if line.rstrip('\n'): #ignora o '\n' na leitura
+                    self.countline += 1
                 
 
     def visit_Method(self, node: jast.Method):
