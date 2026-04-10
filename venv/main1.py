@@ -23,6 +23,23 @@ class ParsingCode(jast.JNodeVisitor):
                 self.countline += 1
         return self.countline
 
+    def locEfficiency(self):
+        self.countline = 0
+        blockComment = False
+        with open(arquivo, 'r') as f:
+            for line in f: # f.split('\n')
+                if blockComment == True and !line[1:] == '*/':
+                    continue
+                else:
+                    blockComment = False
+                if line[:1] == '/*':
+                    blockComment = True
+                    continue
+                if line[:1] == '//':
+                    continue
+                self.countline += 1
+                
+
     def visit_Method(self, node: jast.Method):
         self.visit(node.body)
 
